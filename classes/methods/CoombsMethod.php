@@ -2,8 +2,6 @@
 
 class CoombsMethod extends AbstractElectionMethod {
   
-  private $excludedCandidates = array();
-  
   public function elect(array $votes, $reset = TRUE) {
     if ($reset) {
       $this->resetExcludedCandidates();

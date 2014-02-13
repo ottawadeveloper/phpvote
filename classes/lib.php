@@ -14,6 +14,8 @@ $files = array(
   'methods/AbstractCondorcetMethod.php',
   "methods/CondorcetMultipleMethod.php",
   'methods/BucklinVote.php',
+  'methods/CopelandMethod.php',
+  'methods/KemenyYoungMethod.php',
 );
 
 foreach ($files as $file) {

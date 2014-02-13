@@ -2,7 +2,6 @@
 
 define('CONDORCET_SMITH_SET', 'smith');
 define('CONDORCET_SCHWARTZ_SET', 'schwartz');
-define('CONDORCET_COPELAND_SET', 'copeland');
 
 abstract class AbstractCondorcetMethod extends AbstractElectionMethod {
   
@@ -19,31 +18,6 @@ abstract class AbstractCondorcetMethod extends AbstractElectionMethod {
       }
     }
     return $this->kosarajuMaximalSet($relation, $candidates);
-  }
-  
-  protected function calculateCopelandSet(array $votes) {
-    $pairwise = $this->calculatePairwiseMatrix($votes);
-    $wins = array();
-    $candidates = $this->getAllCandidates($votes);
-    $mostWins = array();
-    foreach ($candidates as $candidate) {
-      $wins[$candidate] = 0;
-      foreach ($candidates as $opponent) {
-        if ($pairwise[$candidate][$opponent] > $pairwise[$opponent][$candidate]) {
-          $wins[$candidate]++;
-        }
-      }
-      if ($mostWins < $wins[$candidate]) {
-        $mostWins = $wins[$candidate];
-      }
-    }
-    $copelandWinners = array();
-    foreach ($candidates as $candidate) {
-      if ($wins[$candidate] === $mostWins) {
-        $copelandWinners[] = $candidate;
-      }
-    }
-    return $copelandWinners;
   }
   
   protected function calculateSmithSet(array $votes) {

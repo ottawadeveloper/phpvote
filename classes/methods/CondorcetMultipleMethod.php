@@ -11,7 +11,7 @@ class CondorcetMultipleMethod extends AbstractCondorcetMethod {
   private $fallback = NULL;
   private $set = CONDORCET_SCHWARTZ_SET;
   
-  public function __construct(AbstractElectionMethod $method, $set = CONDORCET_SCHWARTZ_SET) {
+  public function __construct(AbstractElectionMethod $method = NULL, $set = CONDORCET_SCHWARTZ_SET) {
     if ($method instanceof AbstractCondorcetMethod) {
       throw new Exception('You really should not nest Condorcet methods...');
     }
@@ -32,6 +32,13 @@ class CondorcetMultipleMethod extends AbstractCondorcetMethod {
         return array(
           reset($set) => 1,
         );
+      }
+      if (empty($this->fallback)) {
+        $results = array();
+        foreach ($set as $winner) {
+          $results[$winner] = 1;
+        }
+        return $results;
       }
       $this->fallback->resetExcludedCandidates();
       $candidates = $this->getAllCandidates($votes);

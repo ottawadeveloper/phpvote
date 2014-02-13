@@ -52,21 +52,10 @@ $methods = array(
   'Supplementary Vote' => new InstantRunoff(TRUE, 2),
   'Bucklin Vote' => new BucklinVote(),
   'Sri Lankan Contingent Vote' => new InstantRunoff(TRUE, 3),
-  'Condorcet: Smith/Instant Run-off' => new CondorcetMultipleMethod(new InstantRunoff(), CONDORCET_SMITH_SET),
-  'Condorcet: Schwartz/Instant Run-off' => new CondorcetMultipleMethod(new InstantRunoff(), CONDORCET_SCHWARTZ_SET),
-  'Condorcet: Copeland/Instant Run-off' => new CondorcetMultipleMethod(new InstantRunoff(), CONDORCET_COPELAND_SET),
-  'Condorcet: Smith/Plurality' => new CondorcetMultipleMethod(new Plurality(), CONDORCET_SMITH_SET),
-  'Condorcet: Schwartz/Plurality' => new CondorcetMultipleMethod(new Plurality(), CONDORCET_SCHWARTZ_SET),
-  'Condorcet: Copeland/Plurality' => new CondorcetMultipleMethod(new Plurality(), CONDORCET_COPELAND_SET),
-  'Condorcet: Smith/Contingent' => new CondorcetMultipleMethod(new InstantRunoff(TRUE), CONDORCET_SMITH_SET),
-  'Condorcet: Schwartz/Contingent' => new CondorcetMultipleMethod(new InstantRunoff(TRUE), CONDORCET_SCHWARTZ_SET),
-  'Condorcet: Copeland/Contingent' => new CondorcetMultipleMethod(new InstantRunoff(TRUE), CONDORCET_COPELAND_SET),
-  'Condorcet: Smith/Borda' => new CondorcetMultipleMethod(new BordaCount(BORDA_DIMINISHING), CONDORCET_SMITH_SET),
-  'Condorcet: Schwartz/Borda' => new CondorcetMultipleMethod(new BordaCount(BORDA_DIMINISHING), CONDORCET_SCHWARTZ_SET),
-  'Condorcet: Copeland/Borda' => new CondorcetMultipleMethod(new BordaCount(BORDA_DIMINISHING), CONDORCET_COPELAND_SET),
-  'Condorcet: Smith/Bucklin' => new CondorcetMultipleMethod(new BucklinVote(), CONDORCET_SMITH_SET),
-  'Condorcet: Schwartz/Bucklin' => new CondorcetMultipleMethod(new BucklinVote(), CONDORCET_SCHWARTZ_SET),
-  'Condorcet: Copeland/Bucklin' => new CondorcetMultipleMethod(new BucklinVote(), CONDORCET_COPELAND_SET),
+  'Condorcet (Smith)' => new CondorcetMultipleMethod(NULL, CONDORCET_SMITH_SET),
+  'Condorcet (Schwartz)' => new CondorcetMultipleMethod(NULL, CONDORCET_SCHWARTZ_SET),
+  'Condorcet (Copeland)' => new CopelandMethod(),
+  'Condorcet (Kemeny-Young)' => new KemenyYoungMethod(),
 );
 
 ksort($methods);
@@ -76,7 +65,14 @@ foreach ($methods as $name => $method) {
   if ($method instanceof ElectionMethodInterface) {
     echo '<tr><th style="text-align: left;">' . $name . '</th>';
     $results = $method->elect($votes);
-    echo '<td>' . reset(array_keys($results)) . '</td>';
+    $best = max($results);
+    $winners = array();
+    foreach ($results as $result => $v) {
+      if ($v === $best) {
+        $winners[] = $result;
+      }
+    }
+    echo '<td>' . implode(', ', $winners) . '</td>';
     echo '</tr>';
   }
 }
