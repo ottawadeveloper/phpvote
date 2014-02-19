@@ -1,6 +1,6 @@
 <?php
 
-class CoombsMethod extends AbstractElectionMethod {
+class CoombsMethod extends GenericElectionMethod {
   
   public function elect(array $votes, $reset = TRUE) {
     if ($reset) {
@@ -17,17 +17,21 @@ class CoombsMethod extends AbstractElectionMethod {
     if (empty($results)) {
       return NULL;
     }
-    while (count($results)) {
+    while (count($results) > 1) {
       if (reset($results) >= $threshold) {
-        reset($results);
-        return key($results);
+        break;
       }
       else {
-        $this->addExcludedCandidate($this->leastPreferred($votes));
+        $leastPreferred = $this->leastPreferred($votes);
+        if (empty($leastPreferred)) {
+          break;
+        }
+        $this->addExcludedCandidate($leastPreferred);
         $results = $this->iterateElection($votes);
       }
     }
-    return NULL;
+    reset($results);
+    return key($results);
   }
   
   private function iterateElection(array $votes) {

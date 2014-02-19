@@ -1,6 +1,6 @@
 <?php
 
-class InstantRunoff extends AbstractElectionMethod {
+class InstantRunoff extends GenericElectionMethod {
   
   private $tworound = FALSE;
   private $limitedOptions = 0;

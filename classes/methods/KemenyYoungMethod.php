@@ -6,6 +6,12 @@ class KemenyYoungMethod extends AbstractCondorcetMethod {
     if ($reset) {
       $this->resetExcludedCandidates();
     }
+    $cwinner = $this->calculateCondorcetWinner($votes);
+    if (!empty($cwinner)) {
+      return array(
+        $cwinner => 1,
+      );
+    }
     $pairwise = $this->calculatePairwiseMatrix($votes);
     $rankings = $this->generateRankings($votes);
     $scores = array();

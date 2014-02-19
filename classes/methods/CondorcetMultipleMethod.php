@@ -6,12 +6,12 @@ class CondorcetMultipleMethod extends AbstractCondorcetMethod {
   
   /**
    *
-   * @var AbstractElectionMethod
+   * @var GenericElectionMethod
    */
   private $fallback = NULL;
   private $set = CONDORCET_SCHWARTZ_SET;
   
-  public function __construct(AbstractElectionMethod $method = NULL, $set = CONDORCET_SCHWARTZ_SET) {
+  public function __construct(GenericElectionMethod $method = NULL, $set = CONDORCET_SCHWARTZ_SET) {
     if ($method instanceof AbstractCondorcetMethod) {
       throw new Exception('You really should not nest Condorcet methods...');
     }

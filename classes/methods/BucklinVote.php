@@ -1,6 +1,6 @@
 <?php
 
-class BucklinVote extends AbstractElectionMethod {
+class BucklinVote extends GenericElectionMethod {
   
   private $limit = 0;
   

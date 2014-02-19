@@ -3,7 +3,7 @@
 define('CONDORCET_SMITH_SET', 'smith');
 define('CONDORCET_SCHWARTZ_SET', 'schwartz');
 
-abstract class AbstractCondorcetMethod extends AbstractElectionMethod {
+abstract class AbstractCondorcetMethod extends GenericElectionMethod {
   
   protected function calculateSchwartzSet(array $votes) {
     $pairings = $this->calculatePairwiseMatrix($votes);

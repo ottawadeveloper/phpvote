@@ -7,7 +7,7 @@ define('BORDA_TRIPLE', 'triple');
 define('BORDA_DIMINISHING', 'diminishing');
 define('BORDA_MODIFIED', 'modified');
 
-class BordaCount extends AbstractElectionMethod {
+class BordaCount extends GenericElectionMethod {
   
   private $bordaCountMethod = BORDA_SIMPLE;
   
@@ -29,7 +29,8 @@ class BordaCount extends AbstractElectionMethod {
             if (!isset($results[$candidate])) {
               $results[$candidate] = 0;
             }
-            $results[$candidate] += $this->getPoints($rank, $max, count($candidates));
+            $points = $this->getPoints($rank, $max, count($candidates)) * $vote->getWeight();
+            $results[$candidate] += $points;
           }
         }
       }

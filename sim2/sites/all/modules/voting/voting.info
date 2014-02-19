@@ -1,0 +1,3 @@
+name = Voting Systems
+description = "Used to model voting systems."
+core = 7.x

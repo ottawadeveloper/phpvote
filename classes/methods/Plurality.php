@@ -1,6 +1,6 @@
 <?php
 
-class Plurality extends AbstractElectionMethod {
+class Plurality extends GenericElectionMethod {
   
   public function elect(array $votes, $reset = TRUE) {
     if ($reset) {

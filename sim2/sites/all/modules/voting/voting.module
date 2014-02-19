@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Classifications of voting data:
+ * 
+ * - Ranked vs Rated
+ * - Strict vs Weak (can candidates share a rank)
+ * - Comprehensive vs 
+ */
